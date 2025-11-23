@@ -1,5 +1,4 @@
-int board_getSharkPosition(void);
-int board_stepShark(void);
+
 #include "board.h"
 
 
@@ -21,8 +20,8 @@ int board_stepShark(void)
      int posIdx = shark_position + i +1;
      if(posIdx>=0)
        board_status[posIdx] = BOARDSTATUS_NOK;
-     }
-     shark_position += step;
+    }
+    shark_position += step;
 }
 
 void board_printBoardStatus(void)
@@ -45,8 +44,10 @@ void board_printBoardStatus(void)
 
 int board_getBoardStatus(int pos)
 {
-    return board_status[pos];
-}
+    int coin = board_coin[pos];
+    board_coin[pos] = 0;
+    return coin;
+}//*
 
 int board_getBoardCoin(int pos)
 {
@@ -56,6 +57,8 @@ int board_getBoardCoin(int pos)
 void board_initBoard(void)
 {
     int i; //initialize arrays
+    
+    shark_position = SHARK_INITPOS;
     for(i=0;i<N_BOARD;i++)
     {    
          board_status[i] = BOARDSTATUS_OK;
@@ -72,7 +75,7 @@ void board_initBoard(void)
                   board_coin[coinpos] = rand()%MAX_COIN + 1;
                   flag_allocated == 1;
              } 
-          }while(flag_allocated == 0);
+          }while(flag_allocated == 0);//할당이 안 되어있으면 칸에 코인 할당 
     }
    /////////return 안 해도 되는걸까? 
 }

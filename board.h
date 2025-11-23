@@ -2,9 +2,9 @@
 #define BOARDSTATUS_OK         1
 #define BOARDSTATUS_NOK        0
 
-#if 0
-int board_initBoard(void);
+void board_printBoardStatus(void);
 int board_getBoardStatus(int pos);
 int board_getBoardCoin(int pos);
 void board_initBoard(void);
-#endif
+int board_getSharkPosition(void);
+int board_stepShark(void);
