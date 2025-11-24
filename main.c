@@ -39,18 +39,18 @@ void printPlayerPosition(int player)
 void printPlayerStatus(void)
 {
      int i;
-     printf("player status ---\n");
+     printf("player status --------------------------------------------\n");
      for(i=0;i<N_PLAYER;i++)
      {
         printf("%s : pos %i, coin %i, status %s\n",
                    player_name[i],
                    player_position[i],
                    player_coin[i],
-                   player_statusString[player_status[i]]);
+                   player_statusString[player_status[i]]);///////////////
         printPlayerPosition(i);
      }
 
-     printf("---------------------------------\n");
+     printf("---------------------------------------------------------\n");
 }
 
 void initPlayer(void)
@@ -90,11 +90,11 @@ void checkDie(void)
          
          for(i=0;i<N_PLAYER;i++)
          {
-            if(board_getBoardStatus(player_position[i])== BOARDSTATUS_NOK);
+            if(board_getBoardStatus(player_position[i])== BOARDSTATUS_NOK)
               {
                player_status[i] = PLAYERSTATUS_DIE;
                printf("So Sad! %s died at position %i\n", player_name[i], player_position[i]);
-              }                   
+              } 
          }
 }
         
@@ -111,16 +111,16 @@ int main(int argc, char *argv[])
     srand((unsigned)(time(NULL)) );
     
     //opening
-    printf("=============================\n");
-    printf("*****************************\n");
-    printf("          BINGO GAME         \n");
-    printf("*****************************\n");
-    printf("=============================\n");
+    printf("================================================================\n");
+    printf("****************************************************************\n");
+    printf("                         BINGO GAME                             \n");
+    printf("****************************************************************\n");
+    printf("================================================================\n");
     
     //step1. initialization(player name, variables)
     board_initBoard();
-    initPlayer();
     //player init
+    initPlayer();
     
     //step2. turn play (do-while)
     turn = 0;
@@ -158,15 +158,11 @@ int main(int argc, char *argv[])
          printf("Die result : %i, %s moved to %i\n", die_result, player_name[turn], player_position[turn]);
     
          player_coin[turn] += board_getBoardCoin(player_position[turn]);
-         printf("Lucky! %s got %i coins\n" , player_name[turn] );
+         printf("Lucky! %s got %i coins\n" , player_name[turn], player_coin[turn] );////////////////////////////////////////////////////////
         //2-4. change turn, shark move
         //change turn
-        if(player_status[turn] != PLAYERSTATUS_LIVE)
-        {
-             turn = (turn + 1)%N_PLAYER;
-             continue;
-        }
-    
+        turn = (turn + 1)%N_PLAYER;
+            
         //shark move
         if(turn == 0)
         {
@@ -197,15 +193,14 @@ int main(int argc, char *argv[])
     
     //ending
     printf("\n\n\n\n\n\n\n\n\n");
-    printf("=============================\n");
-    printf("*****************************\n");
-    printf("       CONGRATUATION!!!!!    \n");
-    printf("*#&$*^@(BINGO!!!)*#&$*^@*#&$*\n");
-    printf("        YOU WIN!!!!!!        \n");
-    printf("*****************************\n");
-    printf("=============================\n\n");
+    printf("================================================================\n");
+    printf("****************************************************************\n");
+    printf("                       CONGRATUATION!!!!!                       \n");
+    printf("@#@#@#@#@#@#@#@#@#(         BINGO!!!         )@#@#@#@#@#@#@#@#@#\n");
+    printf("                           YOU WIN!!!!!!                        \n");
+    printf("****************************************************************\n");
+    printf("================================================================\n\n");
     
     system("PAUSE");	
     return 0;
 }
-
