@@ -17,6 +17,35 @@ int player_coin[N_PLAYER];
 int player_status[N_PLAYER];
 char player_statusString[3][MAXLENGTH] = {"LIVE", "DIE", "END"};
 
+int getAlivePlayer(void)
+{
+   int i;
+   int cnt=0;
+   for(i=0;i<N_PLAYER;i++)
+   {
+       if(player_status[i] == PLAYERSTATUS_END)
+         cnt++;
+   }
+   return cnt;
+}
+    
+int getWinner(void)
+{
+    int i;
+    int winner=0;
+    int max_coin=-1;
+       
+    for(i=0;i<N_PLAYER;i++)
+    {
+         if(player_coin[i]>max_coin)
+         {
+              max_coin = player_coin[i];
+              winner = i;                           
+         }              
+    }    
+    return winner;
+}
+    
 void printPlayerPosition(int player) 
 {
      int i;
@@ -31,6 +60,7 @@ void printPlayerPosition(int player)
                   printf(" ");
               else
                   printf("X");
+              
           }   
       }
       printf("|\n"); 
@@ -39,18 +69,18 @@ void printPlayerPosition(int player)
 void printPlayerStatus(void)
 {
      int i;
-     printf("player status --------------------------------------------\n");
+     printf("player status -----------\n");
      for(i=0;i<N_PLAYER;i++)
      {
         printf("%s : pos %i, coin %i, status %s\n",
                    player_name[i],
                    player_position[i],
                    player_coin[i],
-                   player_statusString[player_status[i]]);///////////////
+                   player_statusString[player_status[i]]);//
         printPlayerPosition(i);
      }
 
-     printf("---------------------------------------------------------\n");
+     printf("--------------------------\n");
 }
 
 void initPlayer(void)
@@ -113,7 +143,7 @@ int main(int argc, char *argv[])
     //opening
     printf("================================================================\n");
     printf("****************************************************************\n");
-    printf("                         BINGO GAME                             \n");
+    printf("                   SHARK ISLAND GAME START                      \n");
     printf("****************************************************************\n");
     printf("================================================================\n");
     
@@ -158,7 +188,7 @@ int main(int argc, char *argv[])
          printf("Die result : %i, %s moved to %i\n", die_result, player_name[turn], player_position[turn]);
     
          player_coin[turn] += board_getBoardCoin(player_position[turn]);
-         printf("Lucky! %s got %i coins\n" , player_name[turn], player_coin[turn] );////////////////////////////////////////////////////////
+         printf("Lucky! %s got %i coins\n" , player_name[turn], player_coin[turn]);////////////////////////
         //2-4. change turn, shark move
         //change turn
         turn = (turn + 1)%N_PLAYER;
@@ -174,33 +204,22 @@ int main(int argc, char *argv[])
   }while(gameEnd() == 0);
   
     //step3. game end(winner printing)
-    int getWinner(void)
-    {
-       int i;
-       int winner=0;
-       int max_coin=-1;
-       
-       for(i=0;i<N_PLAYER;i++)
-       {
-           if(player_coin[i]>max_coin)
-           {
-              max_coin = player_coin[i];
-              winner = i;                           
-           }              
-       }    
-       return winner;
-    }
     
+    printf("\n\n\nGAME END!!");
+    printf("\n\n%i players are alive!! The winner is %s!!", getAlivePlayer(), player_name[getWinner()]);
+
     //ending
-    printf("\n\n\n\n\n\n\n\n\n");
+    printf("\n\n\n");
     printf("================================================================\n");
     printf("****************************************************************\n");
-    printf("                       CONGRATUATION!!!!!                       \n");
-    printf("@#@#@#@#@#@#@#@#@#(         BINGO!!!         )@#@#@#@#@#@#@#@#@#\n");
-    printf("                           YOU WIN!!!!!!                        \n");
+    printf("@#@#@#@#@#@#@#@#@    SHARK ISLAND GAME END    @#@#@#@#@#@#@#@#@#\n");
     printf("****************************************************************\n");
     printf("================================================================\n\n");
     
     system("PAUSE");	
     return 0;
 }
+
+
+////상어 이동 후 파손 안되는 경우 있음
+////코인이 누적으로 나옴. 

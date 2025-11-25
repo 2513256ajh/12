@@ -14,9 +14,9 @@ int board_stepShark(void)
     int step = rand()%MAX_SHARKSTEP +1;
     int i;
     
-    for(i<0;i<step;i++)
+    for(i=0;i<step;i++)
     {
-     int posIdx = shark_position + i +1;/////////   
+     int posIdx = shark_position + i +1;// 
      if(posIdx>=0)////보드판 안에 있을 때 파손 
        board_status[posIdx] = BOARDSTATUS_NOK;
     }
@@ -27,7 +27,7 @@ void board_printBoardStatus(void)
 {
      int i;
      
-     printf("--------------BOARD STATUS---------------\n");
+     printf("-------------------------BOARD STATUS---------------------------\n");
      for(i=0;i<N_BOARD;i++)
      {
                            printf("|");
@@ -38,7 +38,7 @@ void board_printBoardStatus(void)
                                printf("O");
      }
      printf("|\n");
-     printf("------------------------------------------\n");
+     printf("----------------------------------------------------------------\n");
 }
 
 int board_getBoardStatus(int pos)
@@ -78,3 +78,4 @@ void board_initBoard(void)
          }while(flag_allocated == 0);//할당이 안 되어있으면 칸에 코인 할당 
     }
 }
+
